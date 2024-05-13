@@ -14,14 +14,23 @@ SRC = fdf.c \
 OBJ = $(SRC:.c=.o)
 
 #LIBFT VARIABLES
-LIBFT = libft/libft.a
 LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-# these will change :)
-MLX = minilibx-linux/libmlx.a
-MLX_DIR = minilibx-linux
+# OS SPECIFICS
+UNAME := $(shell uname -s)
+ifeq ($(UNAME),Darwin)
+	CFLAGS += -DMAC_OS=1
+	MLX_DIR = minilibx_macos
+	LFLAGS = $(LIBFT) $(MLX) -framework OpenGL -framework AppKit
+endif
+ifeq ($(UNAME),Linux)
+	CFLAGS += -DLINUX=1
+	MLX_DIR = minilibx-linux
+	LFLAGS = $(LIBFT) $(MLX) -lXext -lX11 -lm
+endif
+MLX = $(MLX_DIR)/libmlx.a
 
-LFLAGS = $(LIBFT) $(MLX) -lXext -lX11 -lm
 IFLAGS = -I$(LIBFT_DIR) -I$(MLX_DIR)
 
 #PREFIX/COLOUR VARIABLES
@@ -34,6 +43,15 @@ NC = \033[0m
 PREFIX = $(C_ORANGE)<$(NAME)>$(NC)
 
 all: $(NAME)
+
+print:
+	@echo $(NAME)
+	@echo $(CC)
+	@echo $(CFLAGS)
+	@echo $(LFLAGS)
+	@echo $(IFLAGS)
+	@echo $(SRC)
+	@echo $(OBJ)
 
 $(NAME): $(OBJ) $(LIBFT) $(MLX)
 	@printf "$(PREFIX) CREATING $(C_CYAN)$(NAME)$(NC)\n"
@@ -68,4 +86,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re debug debug_cflags
+.PHONY: all clean fclean re debug debug_cflags print
