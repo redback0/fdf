@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/13 15:44:40 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:43:11 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,61 @@ int	main(void)
 	t_fdf_dat	dat;
 
 	dat.mlx = mlx_init();
-	dat.win_height = 600;
-	dat.win_width = 800;
-	dat.img = mlx_new_image(dat.mlx, dat.win_width, dat.win_height);
-	dat.img_dat = mlx_get_data_addr(dat.img, &dat.bpp, &dat.sl, &dat.endian);
-	ft_log(3, "bpp: %d\nsize_line: %d\nendian: %d\n",
-		dat.bpp, dat.sl, dat.endian);
-	dat.win = mlx_new_window(dat.mlx, dat.win_width, dat.win_height, "");
+	dat.height = 600;
+	dat.width = 800;
+	dat.img = mlx_new_image(dat.mlx, dat.width, dat.height);
+	dat.img_dat = (unsigned int *)mlx_get_data_addr(dat.img,
+			&dat.bpp, &dat.sl, &dat.endian);
+	dat.img_size = (dat.sl / (dat.bpp / 8)) * dat.height;
+	ft_log(1, "bpp: %d\nsize_line: %d\nendian: %d\nimg_size: %d\n",
+		dat.bpp, dat.sl, dat.endian, dat.img_size);
+	dat.win = mlx_new_window(dat.mlx, dat.width, dat.height, "");
+	redraw(&dat);
+	mlx_put_image_to_window(dat.mlx, dat.win, dat.img, 0, 0);
 	mlx_key_hook(dat.win, &on_key_pressed, &dat);
-	ft_log(3, "STARTING LOOP\n");
+	ft_log(1, "STARTING LOOP\n");
 	mlx_loop(dat.mlx);
 }
 
 int	on_key_pressed(int keycode, t_fdf_dat *dat)
 {
-	ft_log(3, "KEY PRESSED: %x\n", keycode);
+	ft_log(1, "KEY PRESSED: %x\n", keycode);
 	if (keycode == ESCAPE)
 	{
 		mlx_destroy_window(dat->mlx, dat->win);
 		exit(0);
 	}
+	return (0);
+}
+
+int	redraw(t_fdf_dat *dat)
+{
+	int		y;
+	int		x;
+	double	d;
+	double	red;
+	int		res[2];
+
+	ft_log(1, "REDRAW\n");
+	d = (double)dat->height / (double)dat->width;
+	red = 255.0 / dat->height;
+	x = 0;
+	while (x < dat->width)
+	{
+		res[0] = (int)(d * x);
+		res[1] = (int)(-d * x) + dat->height;
+		y = 0;
+		while (y < dat->height)
+		{
+			if (y == res[0] || y == res[1])
+				dat->img_dat[y * dat->width + x] = 0x0000ffff +
+					((int)(red * y) * 0x00010000);
+			else
+				dat->img_dat[y * dat->width + x] = 0;
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
 	return (0);
 }

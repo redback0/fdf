@@ -25,7 +25,7 @@ ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
 	MLX = minilibx_macos
 	LFLAGS += -framework OpenGL -framework AppKit
-	export CFLAGS=GL_SILENCE_DEPRECATION
+	export CFLAGS=-DGL_SILENCE_DEPRECATION
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
