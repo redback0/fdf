@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/13 12:55:30 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:47:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	main(void)
 	t_fdf_dat	dat;
 
 	dat.mlx = mlx_init();
-	dat.win = mlx_new_window(dat.mlx, 800, 600, "");
+	dat.win_height = 600;
+	dat.win_width = 800;
+	dat.win = mlx_new_window(dat.mlx, dat.win_width, dat.win_height, "");
 	mlx_key_hook(dat.win, &key_hook, &dat);
 	ft_log(3, "STARTING LOOP\n");
 	mlx_loop(dat.mlx);

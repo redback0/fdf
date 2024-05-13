@@ -18,8 +18,6 @@ DLIBS = $(LIBFT) $(MLX)
 LIBS = ft mlx
 FLIBS = $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
 
-MLX = mlx
-
 LFLAGS = $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
 
 # OS SPECIFICS
@@ -28,7 +26,7 @@ ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
 	MLX = minilibx_macos
 	LFLAGS += -framework OpenGL -framework AppKit
-	export GL_SILENCE_DEPRECATION
+	export CFLAGS=GL_SILENCE_DEPRECATION
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
@@ -68,7 +66,7 @@ $(NAME): $(OBJ) $(FLIBS)
 
 $(FLIBS):
 	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
-	@$(MAKE) CFLAGS=-DGL_SILENCE_DEPRECATION -C $(dir $@)
+	@$(MAKE) -C $(dir $@) --no-print-directory -s
 
 %.o: %.c
 	@printf "$(PREFIX) $(C_GRAY)COMPILING $(C_CYAN)$@$(NC)\n"
@@ -83,8 +81,8 @@ debug_cflags:
 clean:
 	@printf "$(PREFIX) $(C_RED)REMOVING OBJECT FILES$(NC)\n"
 	@rm -f $(OBJ)
-	@$(MAKE) fclean -C $(LIBFT)
-	@$(MAKE) clean -C $(MLX)
+	@$(MAKE) fclean -C $(LIBFT) --no-print-directory -s
+	@$(MAKE) clean -C $(MLX) --no-print-directory -s
 	@$(shell $(addprefix $(MAKE) fclean clean -C, $(DLIBS)))
 
 fclean: clean
