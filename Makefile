@@ -28,6 +28,7 @@ ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
 	MLX = minilibx_macos
 	LFLAGS += -framework OpenGL -framework AppKit
+	export GL_SILENCE_DEPRECATION
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
@@ -67,7 +68,7 @@ $(NAME): $(OBJ) $(FLIBS)
 
 $(FLIBS):
 	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
-	@$(MAKE) -C $(dir $@)
+	@$(MAKE) CFLAGS=-DGL_SILENCE_DEPRECATION -C $(dir $@)
 
 %.o: %.c
 	@printf "$(PREFIX) $(C_GRAY)COMPILING $(C_CYAN)$@$(NC)\n"
