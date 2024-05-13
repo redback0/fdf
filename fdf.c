@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/13 12:39:40 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:55:30 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	key_hook(int keycode, t_fdf_dat *dat)
 	if (keycode == ESCAPE)
 	{
 		mlx_destroy_window(dat->mlx, dat->win);
-		//mlx_loop_end(dat->mlx);
 		exit(0);
 	}
 	return (0);

@@ -13,25 +13,30 @@ SRC = fdf.c \
 
 OBJ = $(SRC:.c=.o)
 
-#LIBFT VARIABLES
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT = libft
+DLIBS = $(LIBFT) $(MLX)
+LIBS = ft mlx
+FLIBS = $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
+
+MLX = mlx
+
+LFLAGS = $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
 
 # OS SPECIFICS
 UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
-	MLX_DIR = minilibx_macos
-	LFLAGS = $(LIBFT) $(MLX) -framework OpenGL -framework AppKit
+	MLX = minilibx_macos
+	LFLAGS += -framework OpenGL -framework AppKit
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
-	MLX_DIR = minilibx-linux
-	LFLAGS = $(LIBFT) $(MLX) -lXext -lX11 -lm
+	MLX = minilibx-linux
+	LFLAGS += -lXext -lX11 -lm
 endif
-MLX = $(MLX_DIR)/libmlx.a
 
-IFLAGS = -I$(LIBFT_DIR) -I$(MLX_DIR)
+
+IFLAGS = $(addprefix -I, $(DLIBS))
 
 #PREFIX/COLOUR VARIABLES
 C_GRAY = \033[1;30m
@@ -40,7 +45,7 @@ C_RED = \033[0;31m
 C_CYAN = \033[0;36m
 NC = \033[0m
 
-PREFIX = $(C_ORANGE)<$(NAME)>$(NC)
+PREFIX := $(C_ORANGE)<$(NAME)>$(NC)
 
 all: $(NAME)
 
@@ -52,18 +57,17 @@ print:
 	@echo $(IFLAGS)
 	@echo $(SRC)
 	@echo $(OBJ)
+	@echo $(DLIBS)
+	@echo $(LIBS)
+	@echo $(FLIBS)
 
-$(NAME): $(OBJ) $(LIBFT) $(MLX)
-	@printf "$(PREFIX) CREATING $(C_CYAN)$(NAME)$(NC)\n"
+$(NAME): $(OBJ) $(FLIBS)
+	@printf "$(PREFIX) CREATING $(C_CYAN)$@$(NC)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LFLAGS)
 
-$(LIBFT):
-	@printf "$(PREFIX) MAKING $(C_CYAN)$(LIBFT)$(NC) ARCHIVE\n"
-	@$(MAKE) -C $(LIBFT_DIR)
-
-$(MLX):
-	@printf "$(PREFIX) MAKING $(C_CYAN)$(MLX)$(NC) ARCHIVE\n"
-	@$(MAKE) -C $(MLX_DIR)
+$(FLIBS):
+	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
+	@$(MAKE) -C $(dir $@)
 
 %.o: %.c
 	@printf "$(PREFIX) $(C_GRAY)COMPILING $(C_CYAN)$@$(NC)\n"
@@ -78,7 +82,9 @@ debug_cflags:
 clean:
 	@printf "$(PREFIX) $(C_RED)REMOVING OBJECT FILES$(NC)\n"
 	@rm -f $(OBJ)
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(MAKE) fclean -C $(LIBFT)
+	@$(MAKE) clean -C $(MLX)
+	@$(shell $(addprefix $(MAKE) fclean clean -C, $(DLIBS)))
 
 fclean: clean
 	@printf "$(PREFIX) $(C_RED)REMOVING ARCHIVE$(NC)\n"
