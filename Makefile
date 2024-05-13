@@ -1,10 +1,9 @@
 CC = cc
-
+CFLAGS = -Wall -Wextra -Werror $(DEBUG_FLAGS)
+DEBUG_FLAGS =
 ifeq ($(DEBUG), 1)
-	CFLAGS = -Wall -Wextra -Werror -g -DDEBUG=1
+	DEBUG_FLAGS = -g -DDEBUG=1
 	export DEBUG
-else
-	CFLAGS = -Wall -Wextra -Werror -DDEBUG=0
 endif
 
 NAME = fdf
@@ -75,7 +74,7 @@ $(FLIBS):
 debug: fclean debug_cflags $(NAME)
 
 debug_cflags:
-	@$(eval CFLAGS = -Wall -Wextra -Werror -g -DDEBUG=1)
+	@$(eval DEBUG_FLAGS = -g -DDEBUG=1)
 	@$(eval export DEBUG=1)
 
 clean:
