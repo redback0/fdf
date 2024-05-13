@@ -20,12 +20,12 @@ LIBFT = $(LIBFT_DIR)/libft.a
 # OS SPECIFICS
 UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)
-	CFLAGS += -DMAC_OS=1
+	CFLAGS += -DMAC_OS
 	MLX_DIR = minilibx_macos
 	LFLAGS = $(LIBFT) $(MLX) -framework OpenGL -framework AppKit
 endif
 ifeq ($(UNAME),Linux)
-	CFLAGS += -DLINUX=1
+	CFLAGS += -DLINUX
 	MLX_DIR = minilibx-linux
 	LFLAGS = $(LIBFT) $(MLX) -lXext -lX11 -lm
 endif
