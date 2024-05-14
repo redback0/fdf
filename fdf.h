@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 17:58:18 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:24:09 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 #  define K_A		0x0
 # endif
 
+typedef struct s_vertex
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_vertex;
+
 typedef struct s_fdf_dat
 {
 	void			*mlx;
@@ -47,14 +54,8 @@ typedef struct s_fdf_dat
 	int				**map;
 	int				map_x;
 	int				map_y;
+	t_vertex		**v_map;
 }	t_fdf_dat;
-
-typedef struct s_vertex
-{
-	int	x;
-	int	y;
-	int	z;
-}	t_vertex;
 
 // GET MAP FUNCTIONS
 int		get_map(char *file, t_fdf_dat *dat);
@@ -68,5 +69,6 @@ int		on_key_pressed(int keycode, t_fdf_dat *dat);
 
 // SCREEN FUNCTIONS
 int		redraw(t_fdf_dat *dat);
+void	get_vertex_map(t_fdf_dat *dat);
 
 #endif

@@ -70,6 +70,9 @@ $(FLIBS):
 	@printf "$(PREFIX) $(C_GRAY)COMPILING $(C_CYAN)$@$(NC)\n"
 	@$(CC) $(CFLAGS) $(IFLAGS) -MMD -c $< -o $@
 
+leaks: all
+	leaks --atExit -- ./$(NAME) test_maps/10-2.fdf
+
 debug: fclean debug_cflags $(NAME)
 
 debug_cflags:

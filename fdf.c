@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 18:15:00 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:25:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,65 +42,61 @@ int	on_key_pressed(int keycode, t_fdf_dat *dat)
 	if (keycode == ESCAPE)
 	{
 		map_free(dat);
+		vertex_map_free(dat->v_map, dat);
 		mlx_destroy_window(dat->mlx, dat->win);
 		exit(0);
 	}
 	return (0);
 }
 
-t_vertex	**get_vertex_map(t_fdf_dat *dat)
+void	get_vertex_map(t_fdf_dat *dat)
 {
-	t_vertex	**map;
 	int			xi;
 	int			yi;
 	int			scale;
 
 	scale = 25;
 	xi = 0;
-	map = (t_vertex **)malloc(dat->map_x * sizeof(t_vertex *));
 	while (xi < dat->map_x)
 	{
 		yi = 0;
-		map[xi] = (t_vertex *)malloc(dat->map_y * sizeof(t_vertex));
 		while (yi < dat->map_y)
 		{
-			map[xi][yi].x = ((xi - yi) / sqrt(2))
+			dat->v_map[xi][yi].x = ((xi - yi) / sqrt(2))
 				* scale + (dat->width / 2);
-			map[xi][yi].y = ((xi + (2 * dat->map[xi][yi]) + yi) / sqrt(6))
+			dat->v_map[xi][yi].y = ((xi + (2 * dat->map[xi][yi]) + yi) / sqrt(6))
 				* scale + (dat->height / 2);
 			yi++;
 		}
 		xi++;
 	}
-	return (map);
 }
 
 int	redraw(t_fdf_dat *dat)
 {
-	t_vertex	**map;
 	int			xi;
 	int			yi;
 	int			img_i;
 
 	ft_log(1, "REDRAW\n");
-	map = get_vertex_map(dat);
-	// WRITE ALL ELEMENTS OF MAP TO IMAGE
+	get_vertex_map(dat);
+	// WRITE ALL ELEMENTS OF dat->v_map TO IMAGE
 	xi = 0;
 	while (xi < dat->map_x)
 	{
 		yi = 0;
 		while (yi < dat->map_y)
 		{
-			if (map[xi][yi].y < dat->height && map[xi][yi].x < dat->width)
+			if (dat->v_map[xi][yi].y < dat->height
+				&& dat->v_map[xi][yi].x < dat->width)
 			{
-				img_i = map[xi][yi].y * dat->width + map[xi][yi].x;
+				img_i = dat->v_map[xi][yi].y * dat->width + dat->v_map[xi][yi].x;
 				dat->img_dat[img_i] = 0x00ffffff;
 			}
 			yi++;
 		}
 		xi++;
 	}
-	vertex_map_free(map, dat);
 	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
 	return (0);
 }
