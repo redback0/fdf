@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 14:59:52 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:36:24 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "mlx.h"
+# include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>

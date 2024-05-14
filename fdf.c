@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 14:58:37 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:42:17 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,31 @@ int	on_key_pressed(int keycode, t_fdf_dat *dat)
 
 int	redraw(t_fdf_dat *dat)
 {
-	int		y;
+	double	size = 50;
+	double	cube[][3] = {{0, 0, 0}, {0, 0, size}, {0, size, 0}, {0, size, size},
+			{size, 0, 0}, {size, 0, size}, {size, size, 0}, {size, size, size}};
 	int		x;
-	double	d;
-	double	red;
-	int		res[2];
+	int		y;
+	int		i;
 
 	ft_log(1, "REDRAW\n");
 	// CHANGE IMAGE HERE
+	i = 0;
+	while (i < 8)
+	{
+		x = (cube[i][0] - cube[i][2]) / sqrt(2) + (dat->width / 2);
+		y = (cube[i][0] + (2 * cube[i][1]) + cube[i][2]) / sqrt(6)
+			+ (dat->height / 2);
+		dat->img_dat[y * dat->width + x] = 0x00ffffff;
+		ft_log(1, "x: %d\ny: %d\n", x, y);
+		i++;
+	}
 	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
 	return (0);
 }
+// ISOMETRIC CALCULATION
+// x' = (x - z) / sqrt(2)
+// y' = (x + 2y + z) / sqrt(6)
 // A cross from corner to corner, colors red at the top, to cyan at the bottom
 /*
 	d = (double)dat->height / (double)dat->width;
