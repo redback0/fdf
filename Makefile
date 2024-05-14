@@ -8,7 +8,7 @@ endif
 
 NAME = fdf
 
-SRC = fdf.c \
+SRC = fdf.c get_map.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -25,7 +25,6 @@ ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
 	MLX = minilibx_macos
 	LFLAGS += -framework OpenGL -framework AppKit
-	export CFLAGS=-DGL_SILENCE_DEPRECATION
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX

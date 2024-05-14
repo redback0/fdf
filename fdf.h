@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 16:30:43 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:58:18 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,24 @@ typedef struct s_fdf_dat
 	int				map_y;
 }	t_fdf_dat;
 
+typedef struct s_vertex
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_vertex;
+
+// GET MAP FUNCTIONS
 int		get_map(char *file, t_fdf_dat *dat);
+int		get_map_line(char **split, int i, t_fdf_dat *dat);
+void	get_map_line_info(char *file, t_fdf_dat *dat);
+void	map_free(t_fdf_dat *dat);
+void	vertex_map_free(t_vertex **map, t_fdf_dat *dat);
+
+// EVENT FUNCTIONS
 int		on_key_pressed(int keycode, t_fdf_dat *dat);
+
+// SCREEN FUNCTIONS
 int		redraw(t_fdf_dat *dat);
 
 #endif

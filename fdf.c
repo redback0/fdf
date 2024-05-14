@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 16:45:22 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:15:00 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,80 +36,71 @@ int	main(int argc, char *argv[])
 	mlx_loop(dat.mlx);
 }
 
-int	get_map(char *file, t_fdf_dat *dat)
-{
-	char	**split;
-	char	*line;
-	int		fd;
-	int		i;
-	int		j;
-
-	i = 0;
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		free(line);
-		line = get_next_line(fd);
-		i++;
-	}
-	close(fd);
-	dat->map = (int **)malloc(i * sizeof(int *));
-	dat->map_x = i;
-	dat->map_y = 0;
-	ft_log(1, "STARTING MAP LOOP\n");
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		split = ft_split(line, ' ');
-		free(line);
-		j = -1;
-		while (split[++j])
-			;
-		if (!dat->map_y)
-			dat->map_y = j;
-		else if (dat->map_y != j)
-		{
-			ft_log(3, "BAD AMOUNT OF WORDS ON LINE\n");
-			return (1); // CLEAR MEMORY
-		}
-		dat->map[i] = (int *)malloc(dat->map_y * sizeof(int));
-		j = 0;
-		while (split[j])
-		{
-			dat->map[i][j] = ft_atoi(split[j]);
-			j++;
-		}
-		ft_split_free(split, free);
-		ft_log(1, "GOT ROW\n");
-		line = get_next_line(fd);
-	}
-	ft_log(1, "GOT ALL ROWS\n");
-	close(fd);
-	return (0);
-}
-
 int	on_key_pressed(int keycode, t_fdf_dat *dat)
 {
 	ft_log(1, "KEY PRESSED: %x\n", keycode);
 	if (keycode == ESCAPE)
 	{
+		map_free(dat);
 		mlx_destroy_window(dat->mlx, dat->win);
 		exit(0);
 	}
 	return (0);
 }
 
+t_vertex	**get_vertex_map(t_fdf_dat *dat)
+{
+	t_vertex	**map;
+	int			xi;
+	int			yi;
+	int			scale;
+
+	scale = 25;
+	xi = 0;
+	map = (t_vertex **)malloc(dat->map_x * sizeof(t_vertex *));
+	while (xi < dat->map_x)
+	{
+		yi = 0;
+		map[xi] = (t_vertex *)malloc(dat->map_y * sizeof(t_vertex));
+		while (yi < dat->map_y)
+		{
+			map[xi][yi].x = ((xi - yi) / sqrt(2))
+				* scale + (dat->width / 2);
+			map[xi][yi].y = ((xi + (2 * dat->map[xi][yi]) + yi) / sqrt(6))
+				* scale + (dat->height / 2);
+			yi++;
+		}
+		xi++;
+	}
+	return (map);
+}
+
 int	redraw(t_fdf_dat *dat)
 {
-	//int		x;
-	//int		y;
-	//int		xi;
-	//int		zi;
+	t_vertex	**map;
+	int			xi;
+	int			yi;
+	int			img_i;
 
 	ft_log(1, "REDRAW\n");
-	// CHANGE IMAGE HERE
+	map = get_vertex_map(dat);
+	// WRITE ALL ELEMENTS OF MAP TO IMAGE
+	xi = 0;
+	while (xi < dat->map_x)
+	{
+		yi = 0;
+		while (yi < dat->map_y)
+		{
+			if (map[xi][yi].y < dat->height && map[xi][yi].x < dat->width)
+			{
+				img_i = map[xi][yi].y * dat->width + map[xi][yi].x;
+				dat->img_dat[img_i] = 0x00ffffff;
+			}
+			yi++;
+		}
+		xi++;
+	}
+	vertex_map_free(map, dat);
 	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
 	return (0);
 }
