@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/13 16:46:07 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:59:52 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 
 # ifdef LINUX
 // FOR X11
-#  define ESCAPE 0xff1b
+#  define ESCAPE	0xff1b
+#  define K_A		0x61
 
 # else
 // FOR OpenGL
-#  define ESCAPE 0x35
+#  define ESCAPE	0x35
+#  define K_A		0x0
 # endif
 
 typedef struct s_fdf_dat

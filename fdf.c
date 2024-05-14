@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/13 17:43:11 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:58:37 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	redraw(t_fdf_dat *dat)
 	int		res[2];
 
 	ft_log(1, "REDRAW\n");
+	// CHANGE IMAGE HERE
+	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
+	return (0);
+}
+// A cross from corner to corner, colors red at the top, to cyan at the bottom
+/*
 	d = (double)dat->height / (double)dat->width;
 	red = 255.0 / dat->height;
 	x = 0;
@@ -64,14 +70,13 @@ int	redraw(t_fdf_dat *dat)
 		while (y < dat->height)
 		{
 			if (y == res[0] || y == res[1])
-				dat->img_dat[y * dat->width + x] = 0x0000ffff +
-					((int)(red * y) * 0x00010000);
+				dat->img_dat[y * dat->width + x] = ((int)(red
+							* (dat->height - y)) * 0x00010000)
+					+ ((int)(red * y) * 0x00000101);
 			else
 				dat->img_dat[y * dat->width + x] = 0;
 			y++;
 		}
 		x++;
 	}
-	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
-	return (0);
-}
+*/
