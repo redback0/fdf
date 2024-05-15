@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:13:54 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/14 18:26:58 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:53:38 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	get_map(char *file, t_fdf_dat *dat)
 	int		i;
 
 	get_map_line_info(file, dat);
-	ft_log(1, "STARTING MAP LOOP\n");
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	i = 0;
@@ -29,7 +28,6 @@ int	get_map(char *file, t_fdf_dat *dat)
 		free(line);
 		line = get_next_line(fd);
 	}
-	ft_log(1, "GOT ALL ROWS\n");
 	close(fd);
 	return (0);
 }
@@ -50,17 +48,17 @@ int	get_map_line(char **split, int i, t_fdf_dat *dat)
 		ft_split_free(split, free);
 		return (ft_log(3, "BAD AMOUNT OF WORDS ON LINE\n"), 1);
 	}
-	dat->map[i] = (int *)malloc(dat->map_y * sizeof(int));
+	dat->map[i] = (t_fdf_map_ele *)malloc(dat->map_y * sizeof(t_fdf_map_ele));
 	dat->v_map[i] = (t_vertex *)malloc(dat->map_y * sizeof(t_vertex));
-	ft_log(3, "%p\n", dat->map[i]);
 	j = 0;
 	while (split[j])
 	{
-		dat->map[i][j] = ft_atoi(split[j]);
+		dat->map[i][j].z = ft_atoi(split[j]);
+		dat->map[i][j].color = get_map_ele_color(split[j]);
 		j++;
 	}
 	ft_split_free(split, free);
-	return (ft_log(1, "GOT ROW\n"), 0);
+	return (0);
 }
 
 void	get_map_line_info(char *file, t_fdf_dat *dat)
@@ -79,7 +77,7 @@ void	get_map_line_info(char *file, t_fdf_dat *dat)
 		i++;
 	}
 	close(fd);
-	dat->map = (int **)malloc(i * sizeof(int *));
+	dat->map = (t_fdf_map_ele **)malloc(i * sizeof(t_fdf_map_ele *));
 	dat->v_map = (t_vertex **)malloc(i * sizeof(t_vertex *));
 	dat->map_x = i;
 	dat->map_y = 0;
@@ -98,15 +96,15 @@ void	map_free(t_fdf_dat *dat)
 	free(dat->map);
 }
 
-void	vertex_map_free(t_vertex **map, t_fdf_dat *dat)
+void	vertex_map_free(t_fdf_dat *dat)
 {
 	int	i;
 
 	i = 0;
 	while (i < dat->map_x)
 	{
-		free(map[i]);
+		free(dat->v_map[i]);
 		i++;
 	}
-	free(map);
+	free(dat->v_map);
 }

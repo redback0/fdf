@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 13:17:02 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/15 19:33:36 by njackson         ###   ########.fr       */
+/*   Created: 2024/05/15 19:31:36 by njackson          #+#    #+#             */
+/*   Updated: 2024/05/15 20:47:55 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,37 @@ static int	ft_strchrdup(char *str)
 	return (1);
 }
 
-static int	setvars(signed char *sign, int *out_num, int *b, char *base)
+static int	setvars(int *out, int *sign, int *b, char *base)
 {
-	*b = ft_strlen(base);
+	*out = 0;
 	*sign = 1;
-	*out_num = 0;
+	*b = ft_strlen(base);
 	return (ft_strchrdup(base));
 }
 
-int	ft_putnbr_base_fd(long long n, char *base, int fd)
+int	ft_atoi_base(const char *str, char *base)
 {
-	signed char	sign;
-	int			i;
-	int			out_num;
-	int			b;
+	int	out;
+	int	sign;
+	int	b;
+	int	num;
 
-	if (!setvars(&sign, &out_num, &b, base))
-		return (-1);
-	if (n < 0)
+	if (!setvars(&out, &sign, &b, base))
+		return (0);
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-')
 	{
-		if (write(fd, "-", 1) < 0)
-			return (-1);
-		out_num = 1;
 		sign = -1;
+		str++;
 	}
-	if (n >= b || n <= -b)
+	else if (*str == '+')
+		str++;
+	num = (long)ft_strchr(base, *str++) - (long)base;
+	while (num < b && num >= 0)
 	{
-		i = ft_putnbr_base_fd(n / (sign * b), base, fd);
-		if (i < 0)
-			return (-1);
-		out_num += i;
+		out = (out * b) + num;
+		num = (long)ft_strchr(base, *str++) - (long)base;
 	}
-	if (ft_putchar_fd((sign * base[n % b]), fd) < 0)
-		return (-1);
-	return (out_num + 1);
+	return (sign * out);
 }

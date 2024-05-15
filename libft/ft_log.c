@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:09:04 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/09 20:43:06 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:32:03 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_log(int level, const char *format, ...)
 
 	if (level % 2 && !DEBUG)
 		return (0);
-	fd = level / 2;
+	fd = level / 2 + 1;
 	va_start(args, format);
 	out = ft_printf_args(fd, format, args);
 	va_end(args);

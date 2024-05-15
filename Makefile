@@ -8,9 +8,9 @@ endif
 
 NAME = fdf
 
-SRC = fdf.c get_map.c
-
+SRC = fdf.c get_map.c get_map_utils.c draw.c
 OBJ = $(SRC:.c=.o)
+DEP = $(SRC:.c=.d)
 
 LIBFT = libft
 DLIBS = $(LIBFT) $(MLX)
@@ -65,6 +65,8 @@ $(NAME): $(OBJ) $(FLIBS)
 $(FLIBS):
 	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
 	@$(MAKE) -C $(dir $@) --no-print-directory -s
+
+-include $(DEP)
 
 %.o: %.c
 	@printf "$(PREFIX) $(C_GRAY)COMPILING $(C_CYAN)$@$(NC)\n"

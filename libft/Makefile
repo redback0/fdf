@@ -29,6 +29,8 @@ SRC = ft_atoi.c			ft_bzero.c			ft_calloc.c \
 	  ft_printf.c		ft_abs.c			ft_arrmax.c \
 	  ft_arrmin.c		ft_atoi_strict.c	ft_log_base_n.c \
 	  ft_memswap.c		ft_log.c			ft_split_free.c \
+	  ft_min.c			ft_max.c			ft_atoi_base.c \
+	  ft_atou_base.c
 
 OBJ = $(SRC:.c=.o)
 
