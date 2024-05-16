@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:26:15 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/15 21:14:10 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:05:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,69 @@ static void	write_pixel(t_vertex pxl, t_fdf_dat *dat)
 		&& pxl.x + dat->x_shift >= 0)
 	{
 		img_i = (pxl.y + dat->y_shift) * dat->width + pxl.x + dat->x_shift;
-		dat->img_dat[img_i] = 0x00ffffff;
+		dat->img_dat[img_i] = get_color(pxl.color);
 	}
 }
 
-void	alt_draw_line(t_vertex fp, t_vertex sp, t_vertex delta, t_fdf_dat *dat)
+void	y_draw_line(t_vertex fp, t_vertex sp, t_vertex delta, t_fdf_dat *dat)
 {
 	t_vertex	pxl;
+	t_color		delta_color;
 	double		slope;
 
 	slope = delta.x / (double)delta.y;
 	pxl.y = fp.y;
+	pxl.color = fp.color;
+	delta_color = get_delta_color(fp.color, sp.color, -ft_abs(delta.y));
 	while (pxl.y != sp.y)
 	{
 		pxl.x = slope * (pxl.y - fp.y) + fp.x;
+		pxl.color = add_color(pxl.color, delta_color);
 		write_pixel(pxl, dat);
 		pxl.y += (sp.y > fp.y) + -(sp.y < fp.y);
 	}
+	pxl.x = slope * (pxl.y - fp.y) + fp.x;
+	write_pixel(pxl, dat);
+}
+
+void	x_draw_line(t_vertex fp, t_vertex sp, t_vertex delta, t_fdf_dat *dat)
+{
+	t_vertex	pxl;
+	t_color		delta_color;
+	double		slope;
+
+	slope = delta.y / (double)delta.x;
+	pxl.x = fp.x;
+	pxl.color = fp.color;
+	delta_color = get_delta_color(fp.color, sp.color, -ft_abs(delta.x));
+	while (pxl.x != sp.x)
+	{
+		pxl.y = slope * (pxl.x - fp.x) + fp.y;
+		pxl.color = add_color(pxl.color, delta_color);
+		write_pixel(pxl, dat);
+		pxl.x += (sp.x > fp.x) + -(sp.x < fp.x);
+	}
+	pxl.y = slope * (pxl.x - fp.x) + fp.y;
 	write_pixel(pxl, dat);
 }
 
 void	draw_line(t_vertex fp, t_vertex sp, t_fdf_dat *dat)
 {
-	t_vertex	pxl;
 	t_vertex	delta;
-	double		slope;
 
+	ft_log(3, "color: 0x%x - 0x%x\n", get_color(fp.color), get_color(sp.color));
 	delta.x = sp.x - fp.x;
 	delta.y = sp.y - fp.y;
 	if (ft_abs(delta.y) < ft_abs(delta.x))
 	{
-		slope = delta.y / (double)delta.x;
-		pxl.x = fp.x;
-		while (pxl.x != sp.x)
-		{
-			pxl.y = slope * (pxl.x - fp.x) + fp.y;
-			write_pixel(pxl, dat);
-			pxl.x += (sp.x > fp.x) + -(sp.x < fp.x);
-		}
-		write_pixel(pxl, dat);
+		ft_log(3, "render with x\n");
+		x_draw_line(fp, sp, delta, dat);
 	}
 	else
-		alt_draw_line(fp, sp, delta, dat);
+	{
+		ft_log(3, "render with y\n");
+		y_draw_line(fp, sp, delta, dat);
+	}
 }
 
 int	redraw(t_fdf_dat *dat)

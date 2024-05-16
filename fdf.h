@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/15 20:58:47 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:51:07 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,30 @@
 #  define K_S			
 # endif
 
+typedef struct s_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
+
+// COLOR FUNCTIONS
+unsigned int	get_color(t_color c);
+t_color			add_color(t_color a, t_color b);
+t_color			get_delta_color(t_color scolor, t_color ecolor, int step);
+
+
 typedef struct s_vertex
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	t_color	color;
 }	t_vertex;
 
 typedef struct s_fdf_map_ele
 {
-	int	z;
-	int	color;
+	int		z;
+	t_color	color;
 }	t_fdf_map_ele;
 
 typedef struct s_fdf_dat
@@ -91,7 +105,7 @@ void			map_free(t_fdf_dat *dat);
 void			vertex_map_free(t_fdf_dat *dat);
 
 // UTILS
-unsigned int	get_map_ele_color(char *str);
+t_color			get_map_ele_color(char *str);
 
 // EVENT FUNCTIONS
 int				on_key_pressed(int keycode, t_fdf_dat *dat);

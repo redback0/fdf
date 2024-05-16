@@ -8,7 +8,7 @@ endif
 
 NAME = fdf
 
-SRC = fdf.c get_map.c get_map_utils.c draw.c
+SRC = fdf.c get_map.c get_map_utils.c draw.c color.c
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
 

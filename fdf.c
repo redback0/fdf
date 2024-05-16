@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/15 21:10:34 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:13:13 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	get_vertex_map(t_fdf_dat *dat)
 						+ (2 * -dat->map[xi][yi].z) * dat->scale
 						+ -(yi - dat->map_y / 2) * dat->scale)
 					/ sqrt(6)) + (dat->height / 2);
+			dat->v_map[xi][yi].color = dat->map[xi][yi].color;
 			yi++;
 		}
 		xi++;
