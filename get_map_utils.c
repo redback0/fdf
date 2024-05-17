@@ -6,11 +6,18 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:54:12 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/16 22:46:05 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:08:44 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	map_toupper(unsigned int i, char *c)
+{
+	(void)i;
+	if (*c >= 'a' && *c <= 'z')
+		*c -= 32;
+}
 
 t_color	get_map_ele_color(char *str)
 {
@@ -21,6 +28,7 @@ t_color	get_map_ele_color(char *str)
 	cstr = ft_strchr(str, ',');
 	if (cstr != 0)
 	{
+		ft_striteri(cstr + 3, map_toupper);
 		color = ft_atou_base(cstr + 3, HEX_UPPER);
 		out.b = (unsigned char)color;
 		out.g = (unsigned char)(color / 256);
