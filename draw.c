@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:26:15 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/17 17:22:36 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:23:34 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	draw_line(t_vertex fp, t_vertex sp, t_fdf_dat *dat)
 		|| (fp.y < -dat->y_shift && sp.y < -dat->y_shift)
 		|| (sp.y > dat->height - dat->y_shift
 			&& sp.y > dat->height - dat->y_shift))
+	{
+		ft_log(3, "skipping render: off screen\n");
 		return ;
+	}
 	ft_log(3, "color: 0x%x - 0x%x\n", get_color(fp.color), get_color(sp.color));
 	delta.x = sp.x - fp.x;
 	delta.y = sp.y - fp.y;
@@ -107,7 +110,8 @@ int	redraw(t_fdf_dat *dat)
 		yi = 0;
 		while (yi < dat->map_y)
 		{
-			ft_log(3, "DRAWING VERTEX (%d, %d)\n", xi, yi);
+			ft_log(3, "DRAWING VERTEX (%d, %d) (%d, %d)\n", xi, yi,
+				dat->v_map[xi][yi].x, dat->v_map[xi][yi].y);
 			if (xi > 0)
 				draw_line(dat->v_map[xi][yi], dat->v_map[xi - 1][yi], dat);
 			if (yi > 0)

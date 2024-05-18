@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/16 22:51:07 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:14:16 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+
+# define M_PI           3.14159265358979323846
 
 # ifdef LINUX
 // FOR X11
@@ -92,6 +94,8 @@ typedef struct s_fdf_dat
 	int				x_shift;
 	int				y_shift;
 	double			scale;
+	double			za;
+	double			xa;
 	t_vertex		**v_map;
 }	t_fdf_dat;
 
@@ -107,11 +111,15 @@ void			vertex_map_free(t_fdf_dat *dat);
 // UTILS
 t_color			get_map_ele_color(char *str);
 
+// ROTATE FUNCTIONS
+void			reset_angle(t_fdf_dat *dat);
+void			rotate_z(t_fdf_dat *dat);
+void			rotate_x(t_fdf_dat *dat);
+
 // EVENT FUNCTIONS
 int				on_key_pressed(int keycode, t_fdf_dat *dat);
 
 // SCREEN FUNCTIONS
 int				redraw(t_fdf_dat *dat);
-void			get_vertex_map(t_fdf_dat *dat);
 
 #endif
