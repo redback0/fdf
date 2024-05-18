@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:28:19 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:26:58 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:35:01 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	rotate_z(t_fdf_dat *dat)
 		yi = 0;
 		while (yi < dat->map_y)
 		{
-			dat->v_map[xi][yi].x = xi * cosza * dat->scale
-				- yi * sinza * dat->scale + dat->width / 2;
-			dat->v_map[xi][yi].y = yi * cosza * dat->scale
-				+ xi * sinza * dat->scale + dat->height / 2;
+			dat->v_map[xi][yi].x = (xi - dat->map_x / 2) * cosza * dat->scale
+				- (yi - dat->map_y / 2) * sinza * dat->scale + dat->width / 2;
+			dat->v_map[xi][yi].y = (yi - dat->map_y / 2) * cosza * dat->scale
+				+ (xi - dat->map_x / 2) * sinza * dat->scale + dat->height / 2;
 			yi++;
 		}
 		xi++;

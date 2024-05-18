@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:19:29 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:37:08 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	init_fdf_dat(t_fdf_dat *dat)
 	dat->x_shift = 0;
 	dat->y_shift = 0;
 	dat->scale = 20.0;
-	dat->za = M_PI/4;
-	dat->xa = M_PI/4;
+	dat->za = M_PI / 4;
+	dat->xa = M_PI / 4;
 	dat->img = mlx_new_image(dat->mlx, dat->width, dat->height);
 	dat->img_dat = (unsigned int *)mlx_get_data_addr(dat->img,
 			&dat->bpp, &dat->sl, &dat->endian);
@@ -69,13 +69,13 @@ void	scale_rotate_screen(int keycode, t_fdf_dat *dat)
 	else if (keycode == K_MINUS)
 		dat->scale *= 0.8;
 	else if (keycode == K_A)
-		dat->za -= M_PI/16;
+		dat->za -= M_PI / 16;
 	else if (keycode == K_D)
-		dat->za += M_PI/16;
+		dat->za += M_PI / 16;
 	else if (keycode == K_W)
-		dat->xa += M_PI/16;
+		dat->xa += M_PI / 16;
 	else if (keycode == K_S)
-		dat->xa -= M_PI/16;
+		dat->xa -= M_PI / 16;
 	rotate_z(dat);
 	rotate_x(dat);
 	redraw(dat);

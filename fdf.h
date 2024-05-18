@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:14:16 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:37:56 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_color
 unsigned int	get_color(t_color c);
 t_color			add_color(t_color a, t_color b);
 t_color			get_delta_color(t_color scolor, t_color ecolor, int step);
-
 
 typedef struct s_vertex
 {

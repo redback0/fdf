@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:54:12 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/17 17:08:44 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:37:44 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_color	get_map_ele_color(char *str)
 		out.b = (unsigned char)color;
 		out.g = (unsigned char)(color / 256);
 		out.r = (unsigned char)(color / (256 * 256));
-		ft_log(3, "got color %s (r: %d, g: %d, b: %d)\n", cstr+1,
+		ft_log(3, "got color %s (r: %d, g: %d, b: %d)\n", cstr + 1,
 			(int)out.r, (int)out.g, (int)out.b);
 	}
 	else
