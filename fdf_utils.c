@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 22:32:33 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 22:57:12 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 23:28:57 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	rotate_screen(int keycode, t_fdf_dat *dat)
 		dat->za -= 2 * M_PI;
 	else if (dat->za < 0)
 		dat->za += 2 * M_PI;
-	if (dat->xa >= 2 * M_PI)
-		dat->xa -= 2 * M_PI;
+	if (dat->xa > M_PI)
+		dat->xa = M_PI;
 	else if (dat->xa < 0)
-		dat->xa += 2 * M_PI;
+		dat->xa = 0;
 	rotate_z(dat);
 	rotate_x(dat);
 	redraw(dat);
