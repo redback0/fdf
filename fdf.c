@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:37:08 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:38:16 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,6 @@ void	init_fdf_dat(t_fdf_dat *dat)
 	dat->win = mlx_new_window(dat->mlx, dat->width, dat->height, "");
 }
 
-void	shift_screen(int keycode, t_fdf_dat *dat)
-{
-	if (keycode == K_RIGHT_ARROW)
-		dat->x_shift -= 50;
-	else if (keycode == K_UP_ARROW)
-		dat->y_shift += 50;
-	else if (keycode == K_LEFT_ARROW)
-		dat->x_shift += 50;
-	else if (keycode == K_DOWN_ARROW)
-		dat->y_shift -= 50;
-	redraw(dat);
-}
-
-void	scale_rotate_screen(int keycode, t_fdf_dat *dat)
-{
-	if (keycode == K_PLUS)
-		dat->scale *= 1.2;
-	else if (keycode == K_MINUS)
-		dat->scale *= 0.8;
-	else if (keycode == K_A)
-		dat->za -= M_PI / 16;
-	else if (keycode == K_D)
-		dat->za += M_PI / 16;
-	else if (keycode == K_W)
-		dat->xa += M_PI / 16;
-	else if (keycode == K_S)
-		dat->xa -= M_PI / 16;
-	rotate_z(dat);
-	rotate_x(dat);
-	redraw(dat);
-}
-
 int	on_key_pressed(int keycode, t_fdf_dat *dat)
 {
 	ft_log(1, "KEY PRESSED: %x\n", keycode);
@@ -94,9 +62,10 @@ int	on_key_pressed(int keycode, t_fdf_dat *dat)
 	else if (keycode == K_RIGHT_ARROW || keycode == K_UP_ARROW
 		|| keycode == K_LEFT_ARROW || keycode == K_DOWN_ARROW)
 		shift_screen(keycode, dat);
-	else if (keycode == K_PLUS || keycode == K_MINUS
-		|| keycode == K_A || keycode == K_D
+	else if (keycode == K_A || keycode == K_D
 		|| keycode == K_W || keycode == K_S)
-		scale_rotate_screen(keycode, dat);
+		rotate_screen(keycode, dat);
+	else if (keycode == K_PLUS || keycode == K_MINUS)
+		scale_screen(keycode, dat);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:13:54 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/16 23:37:38 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 23:02:06 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_map_line(char **split, int i, t_fdf_dat *dat)
 	j = 0;
 	while (split[j])
 	{
-		dat->map[i][j].z = ft_atoi(split[j]);
+		dat->map[i][j].z = -ft_atoi(split[j]);
 		dat->map[i][j].color = get_map_ele_color(split[j]);
 		j++;
 	}

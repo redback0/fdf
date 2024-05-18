@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:37:56 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:38:41 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define M_PI           3.14159265358979323846
+# define M_PI			3.14159265358979323846
 
 # ifdef LINUX
 // FOR X11
@@ -117,8 +117,14 @@ void			rotate_x(t_fdf_dat *dat);
 
 // EVENT FUNCTIONS
 int				on_key_pressed(int keycode, t_fdf_dat *dat);
+void			shift_screen(int keycode, t_fdf_dat *dat);
+void			rotate_screen(int keycode, t_fdf_dat *dat);
+void			scale_screen(int keycode, t_fdf_dat *dat);
 
-// SCREEN FUNCTIONS
-int				redraw(t_fdf_dat *dat);
+// DRAW FUNCTIONS
+void			redraw(t_fdf_dat *dat);
+void			redraw_pos(t_fdf_dat *dat);
+void			redraw_neg(t_fdf_dat *dat);
+void			draw_line(t_vertex fp, t_vertex sp, t_fdf_dat *dat);
 
 #endif

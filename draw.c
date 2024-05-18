@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:26:15 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 21:23:34 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/18 23:02:55 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,31 +97,14 @@ void	draw_line(t_vertex fp, t_vertex sp, t_fdf_dat *dat)
 	}
 }
 
-int	redraw(t_fdf_dat *dat)
+void	redraw(t_fdf_dat *dat)
 {
-	int	xi;
-	int	yi;
-
 	ft_log(1, "REDRAW\n");
 	ft_bzero(dat->img_dat, dat->img_size * sizeof(int));
-	xi = 0;
-	while (xi < dat->map_x)
-	{
-		yi = 0;
-		while (yi < dat->map_y)
-		{
-			ft_log(3, "DRAWING VERTEX (%d, %d) (%d, %d)\n", xi, yi,
-				dat->v_map[xi][yi].x, dat->v_map[xi][yi].y);
-			if (xi > 0)
-				draw_line(dat->v_map[xi][yi], dat->v_map[xi - 1][yi], dat);
-			if (yi > 0)
-				draw_line(dat->v_map[xi][yi], dat->v_map[xi][yi - 1], dat);
-			yi++;
-		}
-		xi++;
-	}
-	mlx_put_image_to_window(dat->mlx, dat->win, dat->img, 0, 0);
-	return (0);
+	if (dat->za <= M_PI)
+		redraw_pos(dat);
+	else
+		redraw_neg(dat);
 }
 
 // x' = (x - z) / sqrt(2)
