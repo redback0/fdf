@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:26:15 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/20 13:32:39 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:48:11 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	write_pixel(t_vertex pxl, t_fdf_dat *dat)
 	int	img_i;
 
 	if (pxl.y + dat->y_shift < dat->height
-		&& pxl.x + dat->x_shift < dat->width
+		&& dat->width - pxl.x + dat->x_shift < dat->width
 		&& pxl.y + dat->y_shift >= 0
-		&& pxl.x + dat->x_shift >= 0)
+		&& dat->width - pxl.x + dat->x_shift >= 0)
 	{
 		img_i = (pxl.y + dat->y_shift) * dat->width
 			+ dat->width - pxl.x + dat->x_shift;
@@ -73,9 +73,9 @@ void	draw_line(t_vertex fp, t_vertex sp, t_fdf_dat *dat)
 {
 	t_vertex	delta;
 
-	if ((fp.x < -dat->x_shift && sp.x < -dat->x_shift)
-		|| (fp.x > dat->width - dat->x_shift
-			&& sp.x > dat->width - dat->x_shift)
+	if ((dat->width - fp.x < -dat->x_shift && dat->width - sp.x < -dat->x_shift)
+		|| (dat->width - fp.x > dat->width - dat->x_shift
+			&& dat->width - sp.x > dat->width - dat->x_shift)
 		|| (fp.y < -dat->y_shift && sp.y < -dat->y_shift)
 		|| (sp.y > dat->height - dat->y_shift
 			&& sp.y > dat->height - dat->y_shift))
