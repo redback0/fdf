@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:13:54 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 23:02:06 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:32:12 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	get_map(char *file, t_fdf_dat *dat)
 	i = 0;
 	while (line)
 	{
-		get_map_line(ft_split(line, ' '), i++, dat);
+		if (get_map_line(ft_split(line, ' '), i++, dat))
+			return (1);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -37,6 +38,7 @@ int	get_map_line(char **split, int i, t_fdf_dat *dat)
 	int	j;
 
 	j = -1;
+	ft_log(3, "GETTING LINE: %d\n", i);
 	while (split[++j])
 		;
 	if (!dat->map_y)
@@ -45,6 +47,7 @@ int	get_map_line(char **split, int i, t_fdf_dat *dat)
 	{
 		dat->map_x = i;
 		map_free(dat);
+		vertex_map_free(dat);
 		ft_split_free(split, free);
 		return (ft_log(3, "BAD AMOUNT OF WORDS ON LINE\n"), 1);
 	}

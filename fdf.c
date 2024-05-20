@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 22:38:16 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:31:01 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		return (ft_log(0, "USAGE: ./fdf MAP.fdf\n"), 0);
 	init_fdf_dat(&dat);
-	get_map(argv[1], &dat);
+	if (get_map(argv[1], &dat))
+		return (ft_log(0, "INVALID MAP\n"), 0);
 	reset_angle(&dat);
 	rotate_z(&dat);
 	rotate_x(&dat);
