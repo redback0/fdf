@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:26:15 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 23:02:55 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:32:39 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	write_pixel(t_vertex pxl, t_fdf_dat *dat)
 		&& pxl.y + dat->y_shift >= 0
 		&& pxl.x + dat->x_shift >= 0)
 	{
-		img_i = (pxl.y + dat->y_shift) * dat->width + pxl.x + dat->x_shift;
+		img_i = (pxl.y + dat->y_shift) * dat->width
+			+ dat->width - pxl.x + dat->x_shift;
 		dat->img_dat[img_i] = get_color(pxl.color);
 	}
 }
@@ -101,7 +102,7 @@ void	redraw(t_fdf_dat *dat)
 {
 	ft_log(1, "REDRAW\n");
 	ft_bzero(dat->img_dat, dat->img_size * sizeof(int));
-	if (dat->za <= M_PI)
+	if (dat->za < M_PI)
 		redraw_pos(dat);
 	else
 		redraw_neg(dat);

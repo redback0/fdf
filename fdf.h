@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/18 22:38:41 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:19:15 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define M_PI			3.14159265358979323846
+# ifndef M_PI
+#  define M_PI			3.14159265358979323846
+# endif
 
 # ifdef LINUX
 // FOR X11
@@ -40,14 +42,16 @@
 # else
 // FOR OpenGL
 #  define ESCAPE		0x35
-#  define K_LEFT_ARROW	
-#  define K_UP_ARROW	
-#  define K_RIGHT_ARROW	
-#  define K_DOWN_ARROW	
+#  define K_LEFT_ARROW	0x7b
+#  define K_UP_ARROW	0x7e
+#  define K_RIGHT_ARROW	0x7c
+#  define K_DOWN_ARROW	0x7d
 #  define K_A			0x0
-#  define K_W			
-#  define K_D			
-#  define K_S			
+#  define K_W			0xd
+#  define K_D			0x2
+#  define K_S			0x1
+#  define K_PLUS		0x18
+#  define K_MINUS		0x1b
 # endif
 
 typedef struct s_color
