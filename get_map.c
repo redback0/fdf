@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:13:54 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/20 14:32:12 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:45:04 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	get_map(char *file, t_fdf_dat *dat)
 	i = 0;
 	while (line)
 	{
+		line[ft_strlen(line) - 1] = 0;
 		if (get_map_line(ft_split(line, ' '), i++, dat))
 			return (1);
 		free(line);
