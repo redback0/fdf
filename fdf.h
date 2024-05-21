@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/21 12:53:54 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:04:53 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			init_fdf_dat(t_fdf_dat *dat);
 // GET MAP FUNCTIONS
 int				get_map(char *file, t_fdf_dat *dat);
 int				get_map_line(char **split, int i, t_fdf_dat *dat);
-void			get_map_line_info(char *file, t_fdf_dat *dat);
+int				get_map_line_info(char *file, t_fdf_dat *dat);
 void			map_free(t_fdf_dat *dat);
 void			vertex_map_free(t_fdf_dat *dat);
 

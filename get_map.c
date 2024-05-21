@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:13:54 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/20 15:07:25 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:04:06 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	get_map(char *file, t_fdf_dat *dat)
 	int		fd;
 	int		i;
 
-	get_map_line_info(file, dat);
+	if (get_map_line_info(file, dat))
+		return (1);
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	i = 0;
@@ -68,7 +69,7 @@ int	get_map_line(char **split, int i, t_fdf_dat *dat)
 	return (0);
 }
 
-void	get_map_line_info(char *file, t_fdf_dat *dat)
+int	get_map_line_info(char *file, t_fdf_dat *dat)
 {
 	char	*line;
 	int		fd;
@@ -76,6 +77,8 @@ void	get_map_line_info(char *file, t_fdf_dat *dat)
 
 	i = 0;
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (1);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -88,6 +91,7 @@ void	get_map_line_info(char *file, t_fdf_dat *dat)
 	dat->v_map = (t_vertex **)malloc(i * sizeof(t_vertex *));
 	dat->map_x = i;
 	dat->map_y = 0;
+	return (0);
 }
 
 void	map_free(t_fdf_dat *dat)
