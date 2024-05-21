@@ -1,0 +1,3 @@
+- If you turn the project past 2 pi, the render doesn't pick the correct rendering method, meaning pixels that are supposed to be at the back, move to the front.
+- When you give an invalid file, the program opens a window with no map.
+- When you click the cross on the window, the program does not exit.
