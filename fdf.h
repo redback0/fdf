@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:11:50 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/20 13:19:15 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:53:54 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void			rotate_z(t_fdf_dat *dat);
 void			rotate_x(t_fdf_dat *dat);
 
 // EVENT FUNCTIONS
+int				window_closed(t_fdf_dat *dat);
 int				on_key_pressed(int keycode, t_fdf_dat *dat);
 void			shift_screen(int keycode, t_fdf_dat *dat);
 void			rotate_screen(int keycode, t_fdf_dat *dat);

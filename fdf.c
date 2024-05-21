@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:38:37 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/20 15:08:24 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:56:37 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char *argv[])
 	redraw(&dat);
 	mlx_put_image_to_window(dat.mlx, dat.win, dat.img, 0, 0);
 	mlx_key_hook(dat.win, &on_key_pressed, &dat);
+	mlx_hook(dat.win, 17, 1L<<5, &window_closed, &dat);
 	ft_log(1, "STARTING LOOP\n");
 	mlx_loop(dat.mlx);
 }
@@ -70,4 +71,11 @@ int	on_key_pressed(int keycode, t_fdf_dat *dat)
 	else if (keycode == K_PLUS || keycode == K_MINUS)
 		scale_screen(keycode, dat);
 	return (0);
+}
+
+int	window_closed(t_fdf_dat *dat)
+{
+	map_free(dat);
+	vertex_map_free(dat);
+	exit(0);
 }
